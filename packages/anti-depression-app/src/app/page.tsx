@@ -1,0 +1,1128 @@
+'use client';
+
+import { useState } from 'react';
+
+type Mood = 'sad' | 'stressed' | 'anxious' | 'bored' | 'lonely' | null;
+type Language = 'english' | 'pidgin' | 'spanish' | 'french' | 'hausa' | 'yoruba' | 'igbo';
+type ContentType = 'joke' | 'meme' | 'quote' | 'video';
+
+interface GeneratedContent {
+  type: ContentType;
+  text: string;
+  emoji: string;
+  id?: string;
+}
+
+interface ContentRating {
+  contentId: string;
+  rating: number;
+  comment?: string;
+  timestamp: number;
+}
+
+interface VideoRecommendation {
+  id: number;
+  title: string;
+  emoji: string;
+  description: string;
+  subtitle: string;
+}
+
+// AI-powered content generation based on mood and language
+const generateAIContent = (mood: Mood, language: Language): GeneratedContent => {
+  if (!mood) return { type: 'joke', text: '', emoji: '😊' };
+
+  const contentTypes: ContentType[] = ['joke', 'meme', 'quote', 'video'];
+  const randomType = contentTypes[Math.floor(Math.random() * contentTypes.length)];
+
+  // Content generation logic based on mood intensity
+  const moodIntensity = {
+    sad: 'light', // Light humor to gently uplift
+    stressed: 'motivational', // Motivational with light humor
+    anxious: 'calming', // Calming with reassurance
+    bored: 'energetic', // High-energy, silly humor
+    lonely: 'warm' // Warm, connecting humor
+  };
+
+  const intensity = moodIntensity[mood];
+
+  if (language === 'pidgin') {
+    return generatePidginContent(mood, randomType, intensity);
+  } else if (language === 'spanish') {
+    return generateSpanishContent(mood, randomType, intensity);
+  } else if (language === 'french') {
+    return generateFrenchContent(mood, randomType, intensity);
+  } else if (language === 'hausa') {
+    return generateHausaContent(mood, randomType, intensity);
+  } else if (language === 'yoruba') {
+    return generateYorubaContent(mood, randomType, intensity);
+  } else if (language === 'igbo') {
+    return generateIgboContent(mood, randomType, intensity);
+  } else {
+    return generateEnglishContent(mood, randomType, intensity);
+  }
+};
+
+const generatePidginContent = (mood: Mood, type: ContentType, intensity: string): GeneratedContent => {
+  if (!mood) return { type: 'joke', text: '', emoji: '😊' };
+  const pidginContent = {
+    sad: {
+      joke: [
+        "Why person wey dey sad no fit play hide and seek? Because nobody go find am! But I don find you now, and you matter! 😊💛",
+        "Wetin be the difference between Monday and your smile? Monday dey come every week, but your smile dey precious pass gold! 😄✨",
+        "Person ask me say 'How you dey?' I tell am say 'I dey like WiFi signal for village' - weak but still dey connect! 😂📶"
+      ],
+      meme: [
+        "🎭 MEME ALERT: 'Me trying to adult' vs 'Me when I see food' - Food always win! E go make you smile! 🍕😂",
+        "📸 MEME: 'Expectation vs Reality' - You expect say life go easy, reality say 'Hold my beer!' But you still dey strong! 💪😅",
+        "🖼️ MEME VIBES: When life give you lemons, make lemonade. When life give you Monday, make coffee strong! ☕😤"
+      ],
+      quote: [
+        "💭 'Even the darkest night go end, and sun go rise.' - You be that sun, my friend! Keep shining! 🌅✨",
+        "🌟 'Tears na water for your soul garden. E dey help your happiness grow.' - Your joy dey come! 🌱💧",
+        "💫 'No be how you fall down, na how you stand up.' - And you go stand tall, I promise! 🦒💪"
+      ],
+      video: [
+        "🎬 VIDEO SKIT: 'When you try to be serious but your friend dey crack joke' - Pure comedy gold! Watch am laugh! 😂🎭",
+        "📹 COMEDY CLIP: 'African mama when you tell am say you don chop' - Subtitle: 'You sure? Eat more!' 🍲😄",
+        "🎥 FUNNY MOMENT: 'Me explaining my problems to my dog' - Dog: *wags tail* - Best therapy! 🐕💛"
+      ]
+    },
+    stressed: {
+      joke: [
+        "Why stress dey like bad WiFi? E dey disconnect you from your peace! Time to reset, boss! 🔄😌",
+        "Wetin be stress? Na when your brain get too many tabs open and one of dem dey play music! Make we close some! 🧠🎵",
+        "Person say 'Take am easy'. I say 'I go take am easy when easy come take me!' But seriously, breathe small! 😮‍💨💆"
+      ],
+      meme: [
+        "🎭 MEME: 'My stress level' vs 'My ability to handle am' - Gap too wide! But you fit do am! 💪😅",
+        "📸 STRESS MEME: 'Me pretending say I get my life together' - Oscar-worthy performance! 🏆😂",
+        "🖼️ RELATABLE: 'Stress: 100%, Battery: 5%, Coffee: Empty' - Time to recharge, champion! ☕🔋"
+      ],
+      quote: [
+        "💭 'Pressure burst pipe, but e also make diamond.' - You be diamond in the making! 💎✨",
+        "🌟 'When wahala plenty, remember say you don survive worse.' - You be warrior! ⚔️💪",
+        "💫 'Stress na visitor, no be landlord. E go comot!' - Your peace dey wait for you! 🏠🕊️"
+      ],
+      video: [
+        "🎬 COMEDY SKIT: 'When deadline dey chase you but you dey chase sleep' - Too real! 😴⏰",
+        "📹 FUNNY CLIP: 'African parent when you say you dey stressed' - Them: 'Stressed? You never see anything!' 😂👨‍👩‍👧",
+        "🎥 RELAX VIDEO: 'Cat sleeping peacefully' - Learn from the master of chill! 🐱😴"
+      ]
+    },
+    anxious: {
+      joke: [
+        "Why anxiety be like Nigerian traffic? E dey make you worry but you go still reach your destination! 🚗💨",
+        "Wetin anxiety tell me? 'Worry about everything!' Wetin I tell anxiety? 'Abeg, rest!' 😤✋",
+        "My anxiety get anxiety! But we go overcome together, no worry! 💪😊"
+      ],
+      meme: [
+        "🎭 ANXIETY MEME: 'Things wey fit go wrong' vs 'Things wey actually go wrong' - Your mind dey exaggerate! 😅🧠",
+        "📸 REAL TALK: 'Me overthinking at 3am' - Brain: 'Remember that thing from 2015?' - Relax! 🌙😴",
+        "🖼️ MOOD: 'Anxiety: What if?' vs 'Reality: You dey okay!' - Choose reality! ✅💚"
+      ],
+      quote: [
+        "💭 'Worry na like rocking chair - e dey move but e no dey go anywhere.' - Time to stand up! 🪑➡️🚶",
+        "🌟 'Your mind dey play tricks, but you be the magician!' - Take control! 🎩✨",
+        "💫 'Breathe in peace, breathe out wahala.' - You get this! 😮‍💨🕊️"
+      ],
+      video: [
+        "🎬 CALMING VIDEO: 'Rain falling for zinc roof' - Nigerian ASMR! Pure peace! 🌧️😌",
+        "📹 COMEDY: 'When you worry about presentation but e go well' - You go surprise yourself! 🎤😊",
+        "🎥 CHILL VIBES: 'Puppy learning to walk' - Cute overload to calm your mind! 🐕💕"
+      ]
+    },
+    bored: {
+      joke: [
+        "Why boredom be like Nigerian movie? E long, e dey drag, but something interesting go soon happen! 🎬😄",
+        "Wetin you call person wey dey bored for party? DJ! Because e no dey play! 😂🎵",
+        "I dey so bored, I count all the tiles for ceiling. I find 247... and new respect for ceiling! 🤓📊"
+      ],
+      meme: [
+        "🎭 BOREDOM MEME: 'Me: I dey bored' vs 'Also me: *scrolls phone for 3 hours*' - Classic! 📱😅",
+        "📸 ENERGY NEEDED: 'Boredom level: Watching paint dry' - But paint don dry, let's move! 🎨💨",
+        "🖼️ MOOD: 'When you dey bored but too lazy to find something to do' - The struggle! 😴🤷"
+      ],
+      quote: [
+        "💭 'Boredom na your brain way of saying: Try something new!' - Adventure dey wait! 🚀✨",
+        "🌟 'The cure for boredom na curiosity.' - Go explore something! 🔍🌍",
+        "💫 'Bored? Na opportunity to create your own fun!' - You be the entertainment! 🎪🎉"
+      ],
+      video: [
+        "🎬 HILARIOUS: 'Animals doing silly things compilation' - Instant mood boost! 🐒🦘😂",
+        "📹 COMEDY GOLD: 'Nigerian wedding dance moves' - Energy overload! 💃🕺🎉",
+        "🎥 ENTERTAINMENT: 'Magic tricks gone wrong' - Laugh therapy activated! 🎩😆"
+      ]
+    },
+    lonely: {
+      joke: [
+        "Why lonely person be like phone on airplane mode? You dey there but you no dey connect! Time to turn on your signal! 📱✨",
+        "Wetin be the difference between you and WiFi? WiFi get connection problems, but you? You be the connection! 💫🤝",
+        "Person ask me 'You dey lonely?' I say 'No, I dey practice to be good company for myself!' - But I dey here for you too! 😊💛"
+      ],
+      meme: [
+        "🎭 LONELY MEME: 'Me: Nobody dey for me' vs 'Also me: *ignores 10 messages*' - You get people! 📱💚",
+        "📸 REAL TALK: 'Loneliness vs Solitude' - One na pain, one na power. Choose power! 💪✨",
+        "🖼️ MOOD: 'When you feel alone but you remember say you be somebody's reason to smile' - You matter! 😊💛"
+      ],
+      quote: [
+        "💭 'Even moon dey shine alone, but e dey light up the whole night.' - You be that light! 🌙✨",
+        "🌟 'Loneliness na temporary visitor, but your strength na permanent resident!' - You strong! 💪🏠",
+        "💫 'You no dey alone. The universe dey with you, and so am I!' - We dey here! 🌍💚"
+      ],
+      video: [
+        "🎬 HEARTWARMING: 'Random acts of kindness compilation' - Humanity sweet! 💝😊",
+        "📹 FEEL-GOOD: 'Animals reuniting with owners' - Tears of joy incoming! 🐕😭💛",
+        "🎥 CONNECTION: 'People helping strangers' - You be part of this beautiful world! 🌍🤝"
+      ]
+    }
+  };
+
+  if (!mood) mood = 'sad'; // Default mood
+  const moodContent = pidginContent[mood][type];
+  const randomContent = moodContent[Math.floor(Math.random() * moodContent.length)];
+  
+  const emojis = {
+    joke: '😂',
+    meme: '🎭',
+    quote: '💭',
+    video: '🎬'
+  };
+
+  return {
+    type,
+    text: randomContent,
+    emoji: emojis[type]
+  };
+};
+
+const generateSpanishContent = (mood: Mood, type: ContentType, intensity: string): GeneratedContent => {
+  if (!mood) return { type: 'joke', text: '', emoji: '😊' };
+  const spanishContent = {
+    sad: {
+      joke: ["¿Por qué la persona triste no puede jugar al escondite? ¡Porque nadie la encuentra! Pero yo te encontré, ¡y tú importas! 😊💛"],
+      meme: ["🎭 MEME: 'Yo intentando ser adulto' vs 'Yo cuando veo comida' - ¡La comida siempre gana! 🍕😂"],
+      quote: ["💭 'Incluso la noche más oscura terminará y saldrá el sol.' - ¡Tú eres ese sol, amigo! 🌅✨"],
+      video: ["🎬 VIDEO: 'Cuando intentas ser serio pero tu amigo hace una broma' - ¡Pura comedia! 😂🎭"]
+    },
+    stressed: { joke: ["¿Por qué el estrés es como el mal WiFi? ¡Te desconecta de tu paz! 🔄😌"], meme: ["🎭 MEME: 'Mi nivel de estrés' vs 'Mi capacidad para manejarlo' - ¡Pero puedes hacerlo! 💪😅"], quote: ["💭 'La presión rompe tuberías, pero también hace diamantes.' - ¡Eres un diamante en formación! 💎✨"], video: ["🎬 COMEDIA: 'Cuando la fecha límite te persigue pero tú persigues el sueño' - ¡Muy real! 😴⏰"] },
+    anxious: { joke: ["¿Por qué la ansiedad es como el tráfico? ¡Te hace preocupar pero llegarás a tu destino! 🚗💨"], meme: ["🎭 MEME: 'Cosas que podrían salir mal' vs 'Cosas que realmente salen mal' - ¡Tu mente exagera! 😅🧠"], quote: ["💭 'La preocupación es como una mecedora: se mueve pero no va a ninguna parte.' - ¡Es hora de levantarse! 🪑➡️🚶"], video: ["🎬 VIDEO RELAJANTE: 'Lluvia cayendo en un techo de zinc' - ¡Pura paz ASMR! 🌧️😌"] },
+    bored: { joke: ["¿Por qué el aburrimiento es como una película larga? ¡Se arrastra, pero pronto pasará algo interesante! 🎬😄"], meme: ["🎭 MEME: 'Yo: Estoy aburrido' vs 'También yo: *desplaza el teléfono durante 3 horas*' - ¡Clásico! 📱😅"], quote: ["💭 '¡El aburrimiento es la forma en que tu cerebro dice: Prueba algo nuevo!' - ¡La aventura te espera! 🚀✨"], video: ["🎬 GRACIOSO: 'Animales haciendo cosas tontas' - ¡Impulso instantáneo del estado de ánimo! 🐒🦘😂"] },
+    lonely: { joke: ["¿Por qué una persona solitaria es como un teléfono en modo avión? ¡Estás ahí pero no conectas! ¡Es hora de activar tu señal! 📱✨"], meme: ["🎭 MEME: 'Yo: Nadie está ahí para mí' vs 'También yo: *ignora 10 mensajes*' - ¡Tienes gente! 📱💚"], quote: ["💭 'Incluso la luna brilla sola, pero ilumina toda la noche.' - ¡Tú eres esa luz! 🌙✨"], video: ["🎬 CONMOVEDOR: 'Actos aleatorios de bondad' - ¡La humanidad es hermosa! 💝😊"] }
+  };
+  const moodContent = spanishContent[mood][type];
+  const randomContent = moodContent[Math.floor(Math.random() * moodContent.length)];
+  const emojis = { joke: '😂', meme: '🎭', quote: '💭', video: '🎬' };
+  return { type, text: randomContent, emoji: emojis[type] };
+};
+
+const generateFrenchContent = (mood: Mood, type: ContentType, intensity: string): GeneratedContent => {
+  if (!mood) return { type: 'joke', text: '', emoji: '😊' };
+  const frenchContent = {
+    sad: {
+      joke: ["Pourquoi la personne triste ne peut-elle pas jouer à cache-cache? Parce que personne ne la trouve! Mais je t'ai trouvé, et tu comptes! 😊💛"],
+      meme: ["🎭 MEME: 'Moi essayant d'être adulte' vs 'Moi quand je vois de la nourriture' - La nourriture gagne toujours! 🍕😂"],
+      quote: ["💭 'Même la nuit la plus sombre finira et le soleil se lèvera.' - Tu es ce soleil, mon ami! 🌅✨"],
+      video: ["🎬 VIDÉO: 'Quand tu essaies d'être sérieux mais ton ami fait une blague' - Pure comédie! 😂🎭"]
+    },
+    stressed: { joke: ["Pourquoi le stress est-il comme un mauvais WiFi? Il te déconnecte de ta paix! 🔄😌"], meme: ["🎭 MEME: 'Mon niveau de stress' vs 'Ma capacité à le gérer' - Mais tu peux le faire! 💪😅"], quote: ["💭 'La pression fait éclater les tuyaux, mais elle fait aussi des diamants.' - Tu es un diamant en devenir! 💎✨"], video: ["🎬 COMÉDIE: 'Quand la date limite te poursuit mais tu poursuis le sommeil' - Trop réel! 😴⏰"] },
+    anxious: { joke: ["Pourquoi l'anxiété est-elle comme le trafic? Elle te fait t'inquiéter mais tu arriveras à destination! 🚗💨"], meme: ["🎭 MEME: 'Choses qui pourraient mal tourner' vs 'Choses qui tournent vraiment mal' - Ton esprit exagère! 😅🧠"], quote: ["💭 'L'inquiétude est comme un fauteuil à bascule: ça bouge mais ça ne va nulle part.' - Il est temps de se lever! 🪑➡️🚶"], video: ["🎬 VIDÉO RELAXANTE: 'Pluie tombant sur un toit en zinc' - Pure paix ASMR! 🌧️😌"] },
+    bored: { joke: ["Pourquoi l'ennui est-il comme un long film? Ça traîne, mais quelque chose d'intéressant va bientôt se passer! 🎬😄"], meme: ["🎭 MEME: 'Moi: Je m'ennuie' vs 'Aussi moi: *fait défiler le téléphone pendant 3 heures*' - Classique! 📱😅"], quote: ["💭 'L'ennui est la façon dont ton cerveau dit: Essaie quelque chose de nouveau!' - L'aventure t'attend! 🚀✨"], video: ["🎬 HILARANT: 'Animaux faisant des choses stupides' - Boost d'humeur instantané! 🐒🦘😂"] },
+    lonely: { joke: ["Pourquoi une personne seule est-elle comme un téléphone en mode avion? Tu es là mais tu ne te connectes pas! Il est temps d'activer ton signal! 📱✨"], meme: ["🎭 MEME: 'Moi: Personne n'est là pour moi' vs 'Aussi moi: *ignore 10 messages*' - Tu as des gens! 📱💚"], quote: ["💭 'Même la lune brille seule, mais elle éclaire toute la nuit.' - Tu es cette lumière! 🌙✨"], video: ["🎬 TOUCHANT: 'Actes de gentillesse aléatoires' - L'humanité est belle! 💝😊"] }
+  };
+  const moodContent = frenchContent[mood][type];
+  const randomContent = moodContent[Math.floor(Math.random() * moodContent.length)];
+  const emojis = { joke: '😂', meme: '🎭', quote: '💭', video: '🎬' };
+  return { type, text: randomContent, emoji: emojis[type] };
+};
+
+const generateHausaContent = (mood: Mood, type: ContentType, intensity: string): GeneratedContent => {
+  if (!mood) return { type: 'joke', text: '', emoji: '😊' };
+  const hausaContent = {
+    sad: {
+      joke: ["Me yasa mutum mai bakin ciki ba zai iya wasa da ɓoye ba? Domin babu wanda zai same shi! Amma na same ka, kuma kana da mahimmanci! 😊💛"],
+      meme: ["🎭 MEME: 'Ni ina ƙoƙarin zama babba' vs 'Ni lokacin da na ga abinci' - Abinci koyaushe yana cin nasara! 🍕😂"],
+      quote: ["💭 'Ko dare mafi duhu zai ƙare, rana kuma za ta fito.' - Kai ne wannan rana, abokina! 🌅✨"],
+      video: ["🎬 BIDIYO: 'Lokacin da kake ƙoƙarin zama mai mahimmanci amma abokin ka ya yi wasa' - Wasan kwaikwayo na gaske! 😂🎭"]
+    },
+    stressed: { joke: ["Me yasa damuwa kamar WiFi mara kyau? Yana katse haɗin ka da kwanciyar hankali! 🔄😌"], meme: ["🎭 MEME: 'Matsayin damuwa ta' vs 'Ikon da nake da shi don magance shi' - Amma za ka iya! 💪😅"], quote: ["💭 'Matsi yana fashe bututu, amma kuma yana yin lu'u-lu'u.' - Kai lu'u-lu'u ne a cikin yin! 💎✨"], video: ["🎬 WASAN KWAIKWAYO: 'Lokacin da lokaci yana binku amma kuna bin barci' - Gaskiya ne! 😴⏰"] },
+    anxious: { joke: ["Me yasa damuwa kamar zirga-zirga? Yana sa ka damu amma za ka isa inda kake zuwa! 🚗💨"], meme: ["🎭 MEME: 'Abubuwan da za su iya yin kuskure' vs 'Abubuwan da suka yi kuskure' - Hankalin ka yana ƙara! 😅🧠"], quote: ["💭 'Damuwa kamar kujera mai girgiza: yana motsi amma ba ya zuwa ko'ina.' - Lokaci ya yi da za ka tashi! 🪑➡️🚶"], video: ["🎬 BIDIYO MAI KWANTAR DA HANKALI: 'Ruwan sama yana faɗowa akan rufin ƙarfe' - Kwanciyar hankali ta ASMR! 🌧️😌"] },
+    bored: { joke: ["Me yasa gajiya kamar fim mai tsawo? Yana jan hankali, amma wani abu mai ban sha'awa zai faru nan ba da jimawa ba! 🎬😄"], meme: ["🎭 MEME: 'Ni: Ina gajiya' vs 'Ni kuma: *ina gungura waya na tsawon sa'o'i 3*' - Na al'ada! 📱😅"], quote: ["💭 'Gajiya ita ce hanyar da kwakwalwar ka ke cewa: Gwada sabon abu!' - Kasada tana jiran ka! 🚀✨"], video: ["🎬 MAI BAN DARIYA: 'Dabbobi suna yin abubuwa masu wauta' - Haɓaka yanayi nan take! 🐒🦘😂"] },
+    lonely: { joke: ["Me yasa mutum mai kaɗaici kamar wayar da ke cikin yanayin jirgin sama? Kana nan amma ba ka haɗuwa! Lokaci ya yi da za ka kunna siginar ka! 📱✨"], meme: ["🎭 MEME: 'Ni: Babu wanda yake tare da ni' vs 'Ni kuma: *ina watsi da saƙonni 10*' - Kana da mutane! 📱💚"], quote: ["💭 'Ko wata tana haskakawa ita kaɗai, amma tana haskaka dukan dare.' - Kai ne wannan haske! 🌙✨"], video: ["🎬 MAI TAƁA ZUCIYA: 'Ayyukan alheri na bazuwar' - Dan adam yana da kyau! 💝😊"] }
+  };
+  const moodContent = hausaContent[mood][type];
+  const randomContent = moodContent[Math.floor(Math.random() * moodContent.length)];
+  const emojis = { joke: '😂', meme: '🎭', quote: '💭', video: '🎬' };
+  return { type, text: randomContent, emoji: emojis[type] };
+};
+
+const generateYorubaContent = (mood: Mood, type: ContentType, intensity: string): GeneratedContent => {
+  if (!mood) return { type: 'joke', text: '', emoji: '😊' };
+  const yorubaContent = {
+    sad: {
+      joke: ["Kilode ti eniyan ti o ni ibanuje ko le ṣe ere ifarasin? Nitori ko si ẹnikan ti yoo ri i! Ṣugbọn mo ti ri ọ, o si ṣe pataki! 😊💛"],
+      meme: ["🎭 MEME: 'Emi ti mo n gbiyanju lati dagba' vs 'Emi nigbati mo ba ri ounjẹ' - Ounjẹ ma n bori nigbagbogbo! 🍕😂"],
+      quote: ["💭 'Paapaa oru ti o ṣokunkun julọ yoo pari, oorun yoo si yo.' - Iwọ ni oorun yẹn, ọrẹ mi! 🌅✨"],
+      video: ["🎬 FIDIO: 'Nigbati o n gbiyanju lati ṣe pataki ṣugbọn ọrẹ rẹ ṣe ẹlẹyà' - Awada to dara! 😂🎭"]
+    },
+    stressed: { joke: ["Kilode ti wahala dabi WiFi ti ko dara? O n ge ọ kuro ninu alaafia rẹ! 🔄😌"], meme: ["🎭 MEME: 'Ipele wahala mi' vs 'Agbara mi lati koju rẹ' - Ṣugbọn o le ṣe e! 💪😅"], quote: ["💭 'Titẹ n fọ paipu, ṣugbọn o tun n ṣe okuta iyebiye.' - Iwọ jẹ okuta iyebiye ti n bọ! 💎✨"], video: ["🎬 AWADA: 'Nigbati akoko ipari n lepa ọ ṣugbọn o n lepa oorun' - O jẹ otitọ pupọ! 😴⏰"] },
+    anxious: { joke: ["Kilode ti aibalẹ dabi ijabọ? O mu ki o ṣe aniyan ṣugbọn iwọ yoo de ibi ti o n lọ! 🚗💨"], meme: ["🎭 MEME: 'Awọn nkan ti o le lọ buburu' vs 'Awọn nkan ti o lọ buburu gaan' - Ọkan rẹ n ṣe alekun! 😅🧠"], quote: ["💭 'Aniyan dabi alaga ti n mi: o n gbe ṣugbọn ko lọ nibikibi.' - O to akoko lati dide! 🪑➡️🚶"], video: ["🎬 FIDIO ALAAFIA: 'Ojo ti n rọ lori orule irin' - Alaafia ASMR to dara! 🌧️😌"] },
+    bored: { joke: ["Kilode ti aarẹ dabi fiimu gigun? O n fa, ṣugbọn nkan ti o nifẹ yoo ṣẹlẹ laipẹ! 🎬😄"], meme: ["🎭 MEME: 'Emi: Mo n ṣe aarẹ' vs 'Emi paapaa: *n yi foonu fun wakati 3*' - O jẹ aṣa! 📱😅"], quote: ["💭 'Aarẹ ni ọna ti ọpọlọ rẹ n sọ pe: Gbiyanju nkan titun!' - Ìrìn ajo n duro de ọ! 🚀✨"], video: ["🎬 ALARINRIN: 'Awọn ẹranko ti n ṣe awọn nkan aseju' - Igbelaruge lẹsẹkẹsẹ! 🐒🦘😂"] },
+    lonely: { joke: ["Kilode ti eniyan ti o wa nikan dabi foonu ti o wa ni ipo ọkọ ofurufu? O wa nibẹ ṣugbọn ko sopọ! O to akoko lati tan ifihan rẹ! 📱✨"], meme: ["🎭 MEME: 'Emi: Ko si ẹnikan fun mi' vs 'Emi paapaa: *n foju fo ifiranṣẹ 10*' - O ni awọn eniyan! 📱💚"], quote: ["💭 'Paapaa oṣupa n tan nikan, ṣugbọn o n tan imọlẹ gbogbo oru.' - Iwọ ni imọlẹ yẹn! 🌙✨"], video: ["🎬 TI N FA OKÀ: 'Awọn iṣe inurere laileto' - Eniyan dara! 💝😊"] }
+  };
+  const moodContent = yorubaContent[mood][type];
+  const randomContent = moodContent[Math.floor(Math.random() * moodContent.length)];
+  const emojis = { joke: '😂', meme: '🎭', quote: '💭', video: '🎬' };
+  return { type, text: randomContent, emoji: emojis[type] };
+};
+
+const generateIgboContent = (mood: Mood, type: ContentType, intensity: string): GeneratedContent => {
+  if (!mood) return { type: 'joke', text: '', emoji: '😊' };
+  const igboContent = {
+    sad: {
+      joke: ["Gịnị mere onye mwute na-enweghị ike igwu egwuregwu nzuzo? N'ihi na ọ dịghị onye ga-achọta ya! Mana achọtara m gị, ị dịkwa mkpa! 😊💛"],
+      meme: ["🎭 MEME: 'M na-agbalị ịbụ okenye' vs 'M mgbe m hụrụ nri' - Nri na-emeri mgbe niile! 🍕😂"],
+      quote: ["💭 'Ọbụlagodi abalị kachasị ọchịchịrị ga-agwụ, anyanwụ ga-awakwa.' - Ị bụ anyanwụ ahụ, enyi m! 🌅✨"],
+      video: ["🎬 VIDIYO: 'Mgbe ị na-agbalị ịdị njikere mana enyi gị na-eme egwuregwu' - Ihe ọchị dị ọcha! 😂🎭"]
+    },
+    stressed: { joke: ["Gịnị mere nchegbu ji dị ka WiFi ọjọọ? Ọ na-ewepụ gị na udo gị! 🔄😌"], meme: ["🎭 MEME: 'Ọkwa nchegbu m' vs 'Ike m iji dozie ya' - Mana ị nwere ike ime ya! 💪😅"], quote: ["💭 'Nrụgide na-agbawa paịpụ, mana ọ na-emekwa diamond.' - Ị bụ diamond na-abịa! 💎✨"], video: ["🎬 IHEỌCHỊ: 'Mgbe oge njedebe na-achụ gị mana ị na-achụ ụra' - Ọ bụ eziokwu! 😴⏰"] },
+    anxious: { joke: ["Gịnị mere nchegbu ji dị ka okporo ụzọ? Ọ na-eme ka ị nwee nchegbu mana ị ga-eru ebe ị na-aga! 🚗💨"], meme: ["🎭 MEME: 'Ihe ndị nwere ike ịga nke ọma' vs 'Ihe ndị gara nke ọma' - Uche gị na-eme oke! 😅🧠"], quote: ["💭 'Nchegbu dị ka oche na-ama jijiji: ọ na-akpụ akpụ mana ọ naghị aga ebe ọ bụla.' - Oge eruola ka ị bilie! 🪑➡️🚶"], video: ["🎬 VIDIYO DỊJỤỤ: 'Mmiri ozuzo na-ada n'elu ụlọ igwe' - Udo ASMR dị ọcha! 🌧️😌"] },
+    bored: { joke: ["Gịnị mere ike gwụrụ ji dị ka ihe nkiri ogologo? Ọ na-adọkpụ, mana ihe na-atọ ụtọ ga-eme n'oge na-adịghị anya! 🎬😄"], meme: ["🎭 MEME: 'M: Ike gwụrụ m' vs 'M kwa: *na-agagharị ekwentị ruo awa 3*' - Ọ bụ omenala! 📱😅"], quote: ["💭 'Ike gwụrụ bụ ụzọ ụbụrụ gị si ekwu: Nwalee ihe ọhụrụ!' - Njem na-eche gị! 🚀✨"], video: ["🎬 IHE ỌCH: 'Ụmụ anụmanụ na-eme ihe nzuzu' - Mmụba ọnọdụ ozugbo! 🐒🦘😂"] },
+    lonely: { joke: ["Gịnị mere onye naanị ya ji dị ka ekwentị nọ na ọnọdụ ụgbọ elu? Ị nọ ebe ahụ mana ị naghị ejikọta! Oge eruola ka ị gbanye mgbaàmà gị! 📱✨"], meme: ["🎭 MEME: 'M: Ọ dịghị onye nọ m' vs 'M kwa: *na-eleghara ozi 10 anya*' - Ị nwere ndị mmadụ! 📱💚"], quote: ["💭 'Ọbụlagodi ọnwa na-enwu naanị ya, mana ọ na-enye ìhè abalị niile.' - Ị bụ ìhè ahụ! 🌙✨"], video: ["🎬 IHE NA-EMETỤ OBI: 'Omume obiọma na-enweghị atụmatụ' - Mmadụ mara mma! 💝😊"] }
+  };
+  const moodContent = igboContent[mood][type];
+  const randomContent = moodContent[Math.floor(Math.random() * moodContent.length)];
+  const emojis = { joke: '😂', meme: '🎭', quote: '💭', video: '🎬' };
+  return { type, text: randomContent, emoji: emojis[type] };
+};
+
+const generateEnglishContent = (mood: Mood, type: ContentType, intensity: string): GeneratedContent => {
+  if (!mood) return { type: 'joke', text: '', emoji: '😊' };
+  const englishContent = {
+    sad: {
+      joke: [
+        "Why did the sad person bring a ladder to the bar? They heard the drinks were on the house! But seriously, you're going to be okay! 😊💛",
+        "What's the difference between Monday and your smile? Monday comes every week, but your smile is priceless! 😄✨",
+        "Someone asked me 'How are you?' I said 'I'm like WiFi in the countryside' - weak signal but still connected! 😂📶"
+      ],
+      meme: [
+        "🎭 MEME ALERT: 'Me trying to adult' vs 'Me when I see food' - Food always wins! This will make you smile! 🍕😂",
+        "📸 MEME: 'Expectation vs Reality' - You expect life to be easy, reality says 'Hold my beer!' But you're still strong! 💪😅",
+        "🖼️ MEME VIBES: When life gives you lemons, make lemonade. When life gives you Monday, make strong coffee! ☕😤"
+      ],
+      quote: [
+        "💭 'Even the darkest night will end, and the sun will rise.' - You are that sun, my friend! Keep shining! 🌅✨",
+        "🌟 'Tears are water for your soul's garden. They help your happiness grow.' - Your joy is coming! 🌱💧",
+        "💫 'It's not about how you fall, it's about how you rise.' - And you will rise tall, I promise! 🦒💪"
+      ],
+      video: [
+        "🎬 VIDEO SKIT: 'When you try to be serious but your friend cracks a joke' - Pure comedy gold! Watch and laugh! 😂🎭",
+        "📹 COMEDY CLIP: 'African mom when you say you've eaten' - Subtitle: 'Are you sure? Eat more!' 🍲😄",
+        "🎥 FUNNY MOMENT: 'Me explaining my problems to my dog' - Dog: *wags tail* - Best therapy! 🐕💛"
+      ]
+    },
+    stressed: {
+      joke: [
+        "Why is stress like bad WiFi? It disconnects you from your peace! Time to reset, boss! 🔄😌",
+        "What is stress? It's when your brain has too many tabs open and one is playing music! Let's close some! 🧠🎵",
+        "Someone said 'Take it easy'. I said 'I'll take it easy when easy takes me!' But seriously, breathe! 😮‍💨💆"
+      ],
+      meme: [
+        "🎭 MEME: 'My stress level' vs 'My ability to handle it' - Gap too wide! But you can do this! 💪😅",
+        "📸 STRESS MEME: 'Me pretending I have my life together' - Oscar-worthy performance! 🏆😂",
+        "🖼️ RELATABLE: 'Stress: 100%, Battery: 5%, Coffee: Empty' - Time to recharge, champion! ☕🔋"
+      ],
+      quote: [
+        "💭 'Pressure bursts pipes, but it also makes diamonds.' - You're a diamond in the making! 💎✨",
+        "🌟 'When troubles are many, remember you've survived worse.' - You're a warrior! ⚔️💪",
+        "💫 'Stress is a visitor, not a landlord. It will leave!' - Your peace is waiting! 🏠🕊️"
+      ],
+      video: [
+        "🎬 COMEDY SKIT: 'When deadline chases you but you chase sleep' - Too real! 😴⏰",
+        "📹 FUNNY CLIP: 'Parents when you say you're stressed' - Them: 'Stressed? You haven't seen anything!' 😂👨‍👩‍👧",
+        "🎥 RELAX VIDEO: 'Cat sleeping peacefully' - Learn from the master of chill! 🐱😴"
+      ]
+    },
+    anxious: {
+      joke: [
+        "Why is anxiety like traffic? It makes you worry but you'll still reach your destination! 🚗💨",
+        "What did anxiety tell me? 'Worry about everything!' What did I tell anxiety? 'Please, rest!' 😤✋",
+        "My anxiety has anxiety! But we'll overcome together, don't worry! 💪😊"
+      ],
+      meme: [
+        "🎭 ANXIETY MEME: 'Things that could go wrong' vs 'Things that actually go wrong' - Your mind exaggerates! 😅🧠",
+        "📸 REAL TALK: 'Me overthinking at 3am' - Brain: 'Remember that thing from 2015?' - Relax! 🌙😴",
+        "🖼️ MOOD: 'Anxiety: What if?' vs 'Reality: You're okay!' - Choose reality! ✅💚"
+      ],
+      quote: [
+        "💭 'Worry is like a rocking chair - it moves but goes nowhere.' - Time to stand up! 🪑➡️🚶",
+        "🌟 'Your mind plays tricks, but you're the magician!' - Take control! 🎩✨",
+        "💫 'Breathe in peace, breathe out worry.' - You've got this! 😮‍💨🕊️"
+      ],
+      video: [
+        "🎬 CALMING VIDEO: 'Rain falling on a tin roof' - Pure ASMR peace! 🌧️😌",
+        "📹 COMEDY: 'When you worry about a presentation but it goes well' - You'll surprise yourself! 🎤😊",
+        "🎥 CHILL VIBES: 'Puppy learning to walk' - Cute overload to calm your mind! 🐕💕"
+      ]
+    },
+    bored: {
+      joke: [
+        "Why is boredom like a long movie? It drags on, but something interesting will happen soon! 🎬😄",
+        "What do you call someone who's bored at a party? A DJ! Because they're not playing! 😂🎵",
+        "I was so bored, I counted all the ceiling tiles. Found 247... and new respect for ceilings! 🤓📊"
+      ],
+      meme: [
+        "🎭 BOREDOM MEME: 'Me: I'm bored' vs 'Also me: *scrolls phone for 3 hours*' - Classic! 📱😅",
+        "📸 ENERGY NEEDED: 'Boredom level: Watching paint dry' - But the paint dried, let's move! 🎨💨",
+        "🖼️ MOOD: 'When you're bored but too lazy to find something to do' - The struggle! 😴🤷"
+      ],
+      quote: [
+        "💭 'Boredom is your brain's way of saying: Try something new!' - Adventure awaits! 🚀✨",
+        "🌟 'The cure for boredom is curiosity.' - Go explore something! 🔍🌍",
+        "💫 'Bored? It's an opportunity to create your own fun!' - You're the entertainment! 🎪🎉"
+      ],
+      video: [
+        "🎬 HILARIOUS: 'Animals doing silly things compilation' - Instant mood boost! 🐒🦘😂",
+        "📹 COMEDY GOLD: 'Epic dance moves compilation' - Energy overload! 💃🕺🎉",
+        "🎥 ENTERTAINMENT: 'Magic tricks gone wrong' - Laugh therapy activated! 🎩😆"
+      ]
+    },
+    lonely: {
+      joke: [
+        "Why is a lonely person like a phone on airplane mode? You're there but not connecting! Time to turn on your signal! 📱✨",
+        "What's the difference between you and WiFi? WiFi has connection problems, but you? You ARE the connection! 💫🤝",
+        "Someone asked 'Are you lonely?' I said 'No, I'm practicing being good company for myself!' - But I'm here for you too! 😊💛"
+      ],
+      meme: [
+        "🎭 LONELY MEME: 'Me: Nobody's there for me' vs 'Also me: *ignores 10 messages*' - You have people! 📱💚",
+        "📸 REAL TALK: 'Loneliness vs Solitude' - One is pain, one is power. Choose power! 💪✨",
+        "🖼️ MOOD: 'When you feel alone but remember you're someone's reason to smile' - You matter! 😊💛"
+      ],
+      quote: [
+        "💭 'Even the moon shines alone, but it lights up the whole night.' - You are that light! 🌙✨",
+        "🌟 'Loneliness is a temporary visitor, but your strength is a permanent resident!' - You're strong! 💪🏠",
+        "💫 'You're not alone. The universe is with you, and so am I!' - We're here! 🌍💚"
+      ],
+      video: [
+        "🎬 HEARTWARMING: 'Random acts of kindness compilation' - Humanity is beautiful! 💝😊",
+        "📹 FEEL-GOOD: 'Animals reuniting with owners' - Tears of joy incoming! 🐕😭💛",
+        "🎥 CONNECTION: 'People helping strangers' - You're part of this beautiful world! 🌍🤝"
+      ]
+    }
+  };
+
+  const moodContent = englishContent[mood][type];
+  const randomContent = moodContent[Math.floor(Math.random() * moodContent.length)];
+  
+  const emojis = {
+    joke: '😂',
+    meme: '🎭',
+    quote: '💭',
+    video: '🎬'
+  };
+
+  return {
+    type,
+    text: randomContent,
+    emoji: emojis[type]
+  };
+};
+
+// Video recommendations based on mood
+const getVideoRecommendations = (mood: Mood, language: Language) => {
+  const videos = {
+    english: {
+      sad: [
+        { id: 1, title: "Uplifting Comedy Skits", emoji: "🎭😊", description: "Light-hearted humor to brighten your day", subtitle: "English" },
+        { id: 2, title: "Baby Laughing Compilation", emoji: "👶😂", description: "Pure infectious joy!", subtitle: "No words needed" },
+        { id: 3, title: "Feel-Good Movie Clips", emoji: "🎬💛", description: "Heartwarming moments", subtitle: "English" }
+      ],
+      stressed: [
+        { id: 1, title: "Relaxing Nature Sounds", emoji: "🌿😌", description: "Calm your mind", subtitle: "Ambient" },
+        { id: 2, title: "Stress-Relief Comedy", emoji: "😂💆", description: "Laugh the stress away", subtitle: "English" },
+        { id: 3, title: "Motivational Speeches", emoji: "💪🎤", description: "You've got this!", subtitle: "English" }
+      ],
+      anxious: [
+        { id: 1, title: "Calming Meditation", emoji: "🧘😮‍💨", description: "Breathe and relax", subtitle: "Guided English" },
+        { id: 2, title: "Cute Animals Being Calm", emoji: "🐱😴", description: "Learn from the masters", subtitle: "No words needed" },
+        { id: 3, title: "Gentle Comedy", emoji: "😊🎭", description: "Soft humor to ease anxiety", subtitle: "English" }
+      ],
+      bored: [
+        { id: 1, title: "Epic Fail Compilation", emoji: "🤣💥", description: "Hilarious mishaps!", subtitle: "English" },
+        { id: 2, title: "Dance Challenge Videos", emoji: "💃🕺", description: "Get energized!", subtitle: "Music" },
+        { id: 3, title: "Mind-Blowing Magic", emoji: "🎩✨", description: "Prepare to be amazed", subtitle: "English" }
+      ],
+      lonely: [
+        { id: 1, title: "Heartwarming Reunions", emoji: "🤗💝", description: "Feel the love", subtitle: "English" },
+        { id: 2, title: "Random Acts of Kindness", emoji: "💛🤝", description: "Humanity at its best", subtitle: "English" },
+        { id: 3, title: "Friendship Comedy Skits", emoji: "👯😂", description: "Connection through laughter", subtitle: "English" }
+      ]
+    },
+    pidgin: {
+      sad: [
+        { id: 1, title: "Naija Comedy Skits", emoji: "🎭😊", description: "Laugh small, e go better!", subtitle: "Pidgin/English" },
+        { id: 2, title: "Baby Pikin Dey Laugh", emoji: "👶😂", description: "Pure joy wey go make you smile!", subtitle: "No subtitle needed" },
+        { id: 3, title: "Feel-Good Naija Moments", emoji: "🎬💛", description: "Heartwarming tori", subtitle: "Pidgin" }
+      ],
+      stressed: [
+        { id: 1, title: "Relax Your Mind", emoji: "🌿😌", description: "Make your mind rest small", subtitle: "Ambient" },
+        { id: 2, title: "Naija Comedy - Stress Relief", emoji: "😂💆", description: "Laugh comot stress!", subtitle: "Pidgin" },
+        { id: 3, title: "Motivational Talk", emoji: "💪🎤", description: "You fit do am!", subtitle: "Pidgin/English" }
+      ],
+      anxious: [
+        { id: 1, title: "Calm Down Meditation", emoji: "🧘😮‍💨", description: "Breathe in, breathe out", subtitle: "Pidgin guide" },
+        { id: 2, title: "Animals Wey Dey Chill", emoji: "🐱😴", description: "See how dem dey relax", subtitle: "No subtitle" },
+        { id: 3, title: "Soft Naija Comedy", emoji: "😊🎭", description: "Gentle humor to calm you", subtitle: "Pidgin" }
+      ],
+      bored: [
+        { id: 1, title: "Naija Funny Fails", emoji: "🤣💥", description: "Laugh tire!", subtitle: "Pidgin" },
+        { id: 2, title: "Naija Dance Challenge", emoji: "💃🕺", description: "See moves wey go shock you!", subtitle: "Music" },
+        { id: 3, title: "Magic Wey Go Blow Your Mind", emoji: "🎩✨", description: "How dem do am?", subtitle: "Pidgin" }
+      ],
+      lonely: [
+        { id: 1, title: "Heartwarming Reunions", emoji: "🤗💝", description: "Feel the love", subtitle: "Pidgin/English" },
+        { id: 2, title: "People Dey Help Each Other", emoji: "💛🤝", description: "Humanity sweet!", subtitle: "Pidgin" },
+        { id: 3, title: "Friendship Comedy", emoji: "👯😂", description: "Laugh with your people", subtitle: "Pidgin" }
+      ]
+    }
+,
+    spanish: {
+      sad: [
+        { id: 1, title: "Comedia Española", emoji: "🎭😊", description: "Humor ligero para alegrar tu día", subtitle: "Español" },
+        { id: 2, title: "Bebés Riendo", emoji: "👶😂", description: "¡Alegría pura e infecciosa!", subtitle: "Sin palabras" },
+        { id: 3, title: "Momentos Conmovedores", emoji: "🎬💛", description: "Momentos que tocan el corazón", subtitle: "Español" }
+      ],
+      stressed: [
+        { id: 1, title: "Sonidos de Naturaleza", emoji: "🌿😌", description: "Calma tu mente", subtitle: "Ambiente" },
+        { id: 2, title: "Comedia Anti-Estrés", emoji: "😂💆", description: "Ríe y libera el estrés", subtitle: "Español" },
+        { id: 3, title: "Discursos Motivacionales", emoji: "💪🎤", description: "¡Tú puedes!", subtitle: "Español" }
+      ],
+      anxious: [
+        { id: 1, title: "Meditación Calmante", emoji: "🧘😮‍💨", description: "Respira y relájate", subtitle: "Guía en Español" },
+        { id: 2, title: "Animales Tranquilos", emoji: "🐱😴", description: "Aprende de los maestros", subtitle: "Sin palabras" },
+        { id: 3, title: "Comedia Suave", emoji: "😊🎭", description: "Humor gentil para calmar", subtitle: "Español" }
+      ],
+      bored: [
+        { id: 1, title: "Fails Épicos", emoji: "🤣💥", description: "¡Momentos hilarantes!", subtitle: "Español" },
+        { id: 2, title: "Desafíos de Baile", emoji: "💃🕺", description: "¡Energízate!", subtitle: "Música" },
+        { id: 3, title: "Magia Increíble", emoji: "🎩✨", description: "Prepárate para sorprenderte", subtitle: "Español" }
+      ],
+      lonely: [
+        { id: 1, title: "Reencuentros Emotivos", emoji: "🤗💝", description: "Siente el amor", subtitle: "Español" },
+        { id: 2, title: "Actos de Bondad", emoji: "💛🤝", description: "La humanidad en su mejor momento", subtitle: "Español" },
+        { id: 3, title: "Comedia de Amistad", emoji: "👯😂", description: "Conexión a través de la risa", subtitle: "Español" }
+      ]
+    },
+    french: {
+      sad: [
+        { id: 1, title: "Comédie Française", emoji: "🎭😊", description: "Humour léger pour égayer votre journée", subtitle: "Français" },
+        { id: 2, title: "Bébés qui Rient", emoji: "👶😂", description: "Joie pure et contagieuse!", subtitle: "Sans paroles" },
+        { id: 3, title: "Moments Réconfortants", emoji: "🎬💛", description: "Moments qui touchent le cœur", subtitle: "Français" }
+      ],
+      stressed: [
+        { id: 1, title: "Sons de la Nature", emoji: "🌿😌", description: "Calmez votre esprit", subtitle: "Ambiant" },
+        { id: 2, title: "Comédie Anti-Stress", emoji: "😂💆", description: "Riez et libérez le stress", subtitle: "Français" },
+        { id: 3, title: "Discours Motivants", emoji: "💪🎤", description: "Vous pouvez le faire!", subtitle: "Français" }
+      ],
+      anxious: [
+        { id: 1, title: "Méditation Apaisante", emoji: "🧘😮‍💨", description: "Respirez et détendez-vous", subtitle: "Guide en Français" },
+        { id: 2, title: "Animaux Calmes", emoji: "🐱😴", description: "Apprenez des maîtres", subtitle: "Sans paroles" },
+        { id: 3, title: "Comédie Douce", emoji: "😊🎭", description: "Humour doux pour apaiser", subtitle: "Français" }
+      ],
+      bored: [
+        { id: 1, title: "Fails Épiques", emoji: "🤣💥", description: "Moments hilarants!", subtitle: "Français" },
+        { id: 2, title: "Défis de Danse", emoji: "💃🕺", description: "Énergisez-vous!", subtitle: "Musique" },
+        { id: 3, title: "Magie Incroyable", emoji: "🎩✨", description: "Préparez-vous à être émerveillé", subtitle: "Français" }
+      ],
+      lonely: [
+        { id: 1, title: "Retrouvailles Émouvantes", emoji: "🤗💝", description: "Ressentez l'amour", subtitle: "Français" },
+        { id: 2, title: "Actes de Bonté", emoji: "💛🤝", description: "L'humanité à son meilleur", subtitle: "Français" },
+        { id: 3, title: "Comédie d'Amitié", emoji: "👯😂", description: "Connexion par le rire", subtitle: "Français" }
+      ]
+    },
+    hausa: {
+      sad: [
+        { id: 1, title: "Hausa Comedy Skits", emoji: "🎭😊", description: "Wasan kwaikwayo mai ban dariya", subtitle: "Hausa" },
+        { id: 2, title: "Jariran Suna Dariya", emoji: "👶😂", description: "Farin ciki mai kamawa!", subtitle: "Babu subtitle" },
+        { id: 3, title: "Abubuwan da Suka Faranta Rai", emoji: "🎬💛", description: "Lokutan da suka shafi zuciya", subtitle: "Hausa" }
+      ],
+      stressed: [
+        { id: 1, title: "Sautin Yanayi", emoji: "🌿😌", description: "Kwantar da hankalinku", subtitle: "Ambient" },
+        { id: 2, title: "Wasan Kwaikwayo - Rage Damuwa", emoji: "😂💆", description: "Yi dariya ka kawar da damuwa!", subtitle: "Hausa" },
+        { id: 3, title: "Jawabin Karfafawa", emoji: "💪🎤", description: "Za ka iya!", subtitle: "Hausa" }
+      ],
+      anxious: [
+        { id: 1, title: "Tunani Mai Kwantar da Hankali", emoji: "🧘😮‍💨", description: "Numfashi da shakatawa", subtitle: "Jagora Hausa" },
+        { id: 2, title: "Dabbobi Masu Natsuwa", emoji: "🐱😴", description: "Koyi daga malamai", subtitle: "Babu subtitle" },
+        { id: 3, title: "Wasan Kwaikwayo Mai Laushi", emoji: "😊🎭", description: "Dariya mai laushi don kwantar da kai", subtitle: "Hausa" }
+      ],
+      bored: [
+        { id: 1, title: "Kurakurai Masu Ban Dariya", emoji: "🤣💥", description: "Lokutan ban dariya!", subtitle: "Hausa" },
+        { id: 2, title: "Kalubalen Rawa", emoji: "💃🕺", description: "Sami kuzari!", subtitle: "Kiɗa" },
+        { id: 3, title: "Sihiri Mai Ban Mamaki", emoji: "🎩✨", description: "Shirya don mamaki", subtitle: "Hausa" }
+      ],
+      lonely: [
+        { id: 1, title: "Haduwar da Ta Shafi Zuciya", emoji: "🤗💝", description: "Ji ƙauna", subtitle: "Hausa" },
+        { id: 2, title: "Ayyukan Alheri", emoji: "💛🤝", description: "Ɗan adam a mafi kyawun yanayi", subtitle: "Hausa" },
+        { id: 3, title: "Wasan Kwaikwayo na Abota", emoji: "👯😂", description: "Haɗuwa ta hanyar dariya", subtitle: "Hausa" }
+      ]
+    },
+    yoruba: {
+      sad: [
+        { id: 1, title: "Yoruba Comedy Skits", emoji: "🎭😊", description: "Ere ọpẹ lati mu ọjọ rẹ dara", subtitle: "Yoruba" },
+        { id: 2, title: "Awọn Ọmọ Ti N Rẹrin", emoji: "👶😂", description: "Ayọ ti o ni agbara!", subtitle: "Ko si subtitle" },
+        { id: 3, title: "Awọn Akoko Ti O Dara", emoji: "🎬💛", description: "Awọn akoko ti o kan ọkan", subtitle: "Yoruba" }
+      ],
+      stressed: [
+        { id: 1, title: "Awọn Ohun Iseda", emoji: "🌿😌", description: "Mu ọkan rẹ balẹ", subtitle: "Ambient" },
+        { id: 2, title: "Ere Ọpẹ - Idinku Wahala", emoji: "😂💆", description: "Rẹrin ki o si yọ wahala kuro!", subtitle: "Yoruba" },
+        { id: 3, title: "Awọn Ọrọ Iwuri", emoji: "💪🎤", description: "O le ṣe!", subtitle: "Yoruba" }
+      ],
+      anxious: [
+        { id: 1, title: "Iṣaro Alaafia", emoji: "🧘😮‍💨", description: "Mi ẹmi ki o si sinmi", subtitle: "Itọsọna Yoruba" },
+        { id: 2, title: "Awọn Ẹranko Ti O Ni Isinmi", emoji: "🐱😴", description: "Kọ ẹkọ lati ọdọ awọn ọga", subtitle: "Ko si subtitle" },
+        { id: 3, title: "Ere Ọpẹ Alaafia", emoji: "😊🎭", description: "Ere ọpẹ lati mu ọkan balẹ", subtitle: "Yoruba" }
+      ],
+      bored: [
+        { id: 1, title: "Awọn Aṣiṣe Ti O Dun", emoji: "🤣💥", description: "Awọn akoko ti o dun!", subtitle: "Yoruba" },
+        { id: 2, title: "Awọn Idanwo Ijó", emoji: "💃🕺", description: "Gba agbara!", subtitle: "Orin" },
+        { id: 3, title: "Idan Ti O Yanilenu", emoji: "🎩✨", description: "Mura silẹ fun iyalẹnu", subtitle: "Yoruba" }
+      ],
+      lonely: [
+        { id: 1, title: "Awọn Ipade Ti O Kan Ọkan", emoji: "🤗💝", description: "Rilara ife", subtitle: "Yoruba" },
+        { id: 2, title: "Awọn Iṣe Oore", emoji: "💛🤝", description: "Eniyan ni ipele ti o dara julọ", subtitle: "Yoruba" },
+        { id: 3, title: "Ere Ọpẹ Ọrẹ", emoji: "👯😂", description: "Asopọ nipasẹ ẹrin", subtitle: "Yoruba" }
+      ]
+    },
+    igbo: {
+      sad: [
+        { id: 1, title: "Igbo Comedy Skits", emoji: "🎭😊", description: "Egwuregwu ọchị iji mee ka ụbọchị gị dịkwuo mma", subtitle: "Igbo" },
+        { id: 2, title: "Ụmụaka Na-achị Ọchị", emoji: "👶😂", description: "Ọṅụ dị ọcha!", subtitle: "Enweghị subtitle" },
+        { id: 3, title: "Oge Ndị Na-eme Ka Obi Dị Mma", emoji: "🎬💛", description: "Oge ndị na-emetụ obi", subtitle: "Igbo" }
+      ],
+      stressed: [
+        { id: 1, title: "Ụda Okike", emoji: "🌿😌", description: "Mee ka uche gị dajụọ", subtitle: "Ambient" },
+        { id: 2, title: "Egwuregwu Ọchị - Ibelata Nchegbu", emoji: "😂💆", description: "Chịa ọchị wepụ nchegbu!", subtitle: "Igbo" },
+        { id: 3, title: "Okwu Agbamume", emoji: "💪🎤", description: "Ị nwere ike!", subtitle: "Igbo" }
+      ],
+      anxious: [
+        { id: 1, title: "Ntụgharị Uche Dị Jụụ", emoji: "🧘😮‍💨", description: "Kuo ume ma zuru ike", subtitle: "Nduzi Igbo" },
+        { id: 2, title: "Anụmanụ Ndị Dị Jụụ", emoji: "🐱😴", description: "Mụta n'aka ndị ọkachamara", subtitle: "Enweghị subtitle" },
+        { id: 3, title: "Egwuregwu Ọchị Dị Nro", emoji: "😊🎭", description: "Ọchị dị nro iji mee ka obi dajụọ", subtitle: "Igbo" }
+      ],
+      bored: [
+        { id: 1, title: "Mmejọ Na-atọ Ọchị", emoji: "🤣💥", description: "Oge na-atọ ọchị!", subtitle: "Igbo" },
+        { id: 2, title: "Ihe Ịma Aka Ịgba Egwu", emoji: "💃🕺", description: "Nweta ume!", subtitle: "Egwu" },
+        { id: 3, title: "Anwansi Dị Ịtụnanya", emoji: "🎩✨", description: "Jikeere maka ịtụnanya", subtitle: "Igbo" }
+      ],
+      lonely: [
+        { id: 1, title: "Nzukọ Na-emetụ Obi", emoji: "🤗💝", description: "Nwee mmetụta ịhụnanya", subtitle: "Igbo" },
+        { id: 2, title: "Omume Obiọma", emoji: "💛🤝", description: "Mmadụ n'ọnọdụ kacha mma", subtitle: "Igbo" },
+        { id: 3, title: "Egwuregwu Ọchị Ọbụbụenyi", emoji: "👯😂", description: "Njikọ site na ọchị", subtitle: "Igbo" }
+      ]
+    }
+  };
+
+  if (!mood) return videos[language].sad;
+  return videos[language][mood];
+};
+
+export default function MoodLift() {
+  const [selectedMood, setSelectedMood] = useState<Mood>(null);
+  const [selectedLanguage, setSelectedLanguage] = useState<Language>('english');
+  const [currentContent, setCurrentContent] = useState<GeneratedContent | null>(null);
+  const [showContent, setShowContent] = useState(false);
+  const [currentRating, setCurrentRating] = useState<number>(0);
+  const [showRatingForm, setShowRatingForm] = useState(false);
+  const [ratingComment, setRatingComment] = useState('');
+
+  const moods = [
+    { id: 'sad' as Mood, label: 'Sad', emoji: '😢', color: 'from-blue-500 to-blue-600', description: 'Feeling down' },
+    { id: 'stressed' as Mood, label: 'Stressed', emoji: '😰', color: 'from-orange-500 to-orange-600', description: 'Overwhelmed' },
+    { id: 'anxious' as Mood, label: 'Anxious', emoji: '😟', color: 'from-purple-500 to-purple-600', description: 'Worried' },
+    { id: 'bored' as Mood, label: 'Bored', emoji: '😐', color: 'from-gray-500 to-gray-600', description: 'Need excitement' },
+    { id: 'lonely' as Mood, label: 'Lonely', emoji: '😔', color: 'from-indigo-500 to-indigo-600', description: 'Need connection' }
+  ];
+
+  const languages = [
+    { id: 'english' as Language, label: 'English', flag: '🇬🇧' },
+    { id: 'pidgin' as Language, label: 'Pidgin', flag: '🇳🇬' },
+    { id: 'spanish' as Language, label: 'Spanish', flag: '🇪🇸' },
+    { id: 'french' as Language, label: 'French', flag: '🇫🇷' },
+    { id: 'hausa' as Language, label: 'Hausa', flag: '🇳🇬' },
+    { id: 'yoruba' as Language, label: 'Yoruba', flag: '🇳🇬' },
+    { id: 'igbo' as Language, label: 'Igbo', flag: '🇳🇬' }
+  ];
+
+  const generateContent = () => {
+    if (!selectedMood) return;
+    
+    const content = generateAIContent(selectedMood, selectedLanguage);
+    content.id = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    setCurrentContent(content);
+    setShowContent(true);
+    setCurrentRating(0);
+    setShowRatingForm(false);
+    setRatingComment('');
+  };
+
+  const handleMoodSelect = (mood: Mood) => {
+    setSelectedMood(mood);
+    setShowContent(false);
+  };
+
+  const handleRating = (rating: number) => {
+    setCurrentRating(rating);
+    setShowRatingForm(true);
+  };
+
+  const submitRating = () => {
+    if (!currentContent || currentRating === 0) return;
+
+    const rating: ContentRating = {
+      contentId: currentContent.id || '',
+      rating: currentRating,
+      comment: ratingComment,
+      timestamp: Date.now()
+    };
+
+    // Save rating to localStorage
+    const ratings = JSON.parse(localStorage.getItem('moodlift-ratings') || '[]');
+    ratings.push(rating);
+    localStorage.setItem('moodlift-ratings', JSON.stringify(ratings));
+
+    // Update language preference based on ratings
+    const languagePrefs = JSON.parse(localStorage.getItem('moodlift-language-prefs') || '{}');
+    languagePrefs[selectedLanguage] = (languagePrefs[selectedLanguage] || 0) + rating;
+    localStorage.setItem('moodlift-language-prefs', JSON.stringify(languagePrefs));
+
+    // Update mood-based content preferences
+    const moodPrefs = JSON.parse(localStorage.getItem('moodlift-mood-prefs') || '{}');
+    const key = `${selectedMood}-${currentContent.type}`;
+    moodPrefs[key] = (moodPrefs[key] || 0) + rating;
+    localStorage.setItem('moodlift-mood-prefs', JSON.stringify(moodPrefs));
+
+    alert(selectedLanguage === 'pidgin' ? 'Thank you for your feedback! 🙏' : 'Thank you for your feedback! 🙏');
+    setShowRatingForm(false);
+    setRatingComment('');
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-pink-50 to-purple-50">
+      {/* Header */}
+      <header className="bg-white/80 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-500 via-pink-500 to-purple-500 bg-clip-text text-transparent">
+            MoodLift ✨
+          </h1>
+          <p className="text-gray-600 text-sm mt-1">Your daily dose of joy</p>
+        </div>
+      </header>
+
+      <main className="max-w-6xl mx-auto px-4 py-8">
+        {/* Language Selector */}
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800">Choose Your Language</h2>
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
+            {languages.map((lang) => (
+              <button
+                key={lang.id}
+                onClick={() => {
+                  setSelectedLanguage(lang.id);
+                  setShowContent(false);
+                }}
+                className={`p-6 rounded-xl transition-all transform hover:scale-105 ${
+                  selectedLanguage === lang.id
+                    ? 'bg-gradient-to-r from-yellow-400 to-pink-400 text-white shadow-lg'
+                    : 'bg-white text-gray-700 hover:shadow-md'
+                }`}
+              >
+                <div className="text-4xl mb-2">{lang.flag}</div>
+                <div className="text-lg font-medium">{lang.label}</div>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* Mood Selector */}
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800">
+            {selectedLanguage === 'pidgin' ? 'How you dey feel?' : 'How are you feeling?'}
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {moods.map((mood) => (
+              <button
+                key={mood.id}
+                onClick={() => handleMoodSelect(mood.id)}
+                className={`p-6 rounded-2xl transition-all transform hover:scale-105 ${
+                  selectedMood === mood.id
+                    ? `bg-gradient-to-br ${mood.color} text-white shadow-xl`
+                    : 'bg-white text-gray-700 hover:shadow-lg'
+                }`}
+              >
+                <div className="text-4xl mb-2">{mood.emoji}</div>
+                <div className="font-medium">{mood.label}</div>
+                <div className="text-xs mt-1 opacity-75">{mood.description}</div>
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* Generate Button */}
+        {selectedMood && (
+          <section className="mb-8 text-center">
+            <button
+              onClick={generateContent}
+              className="px-8 py-4 bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all text-lg"
+            >
+              {selectedLanguage === 'pidgin' ? '🎭 Generate My Content' : '🎭 Generate My Content'}
+            </button>
+            <p className="text-sm text-gray-600 mt-2">
+              {selectedLanguage === 'pidgin' 
+                ? 'Get jokes, memes, quotes, or video recommendations!' 
+                : 'Get jokes, memes, quotes, or video recommendations!'}
+            </p>
+          </section>
+        )}
+
+        {/* Content Display */}
+        {showContent && currentContent && (
+          <section className="mb-8">
+            <div className="bg-white rounded-2xl shadow-xl p-8 border-4 border-yellow-300">
+              <div className="flex items-center justify-center mb-4">
+                <span className="text-5xl">{currentContent.emoji}</span>
+                <span className="ml-3 text-xl font-bold text-gray-700 capitalize">
+                  {currentContent.type}
+                </span>
+              </div>
+              
+              {/* Text Content (Jokes, Quotes, Memes) */}
+              {currentContent.type !== 'video' && (
+                <div className="bg-gradient-to-br from-yellow-50 to-pink-50 rounded-xl p-6 mb-6">
+                  <div className="text-lg md:text-xl text-gray-800 leading-relaxed">
+                    {currentContent.text}
+                  </div>
+                </div>
+              )}
+
+              {/* Video Content with Embed */}
+              {currentContent.type === 'video' && (
+                <div className="space-y-4">
+                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6">
+                    <p className="text-lg text-gray-800 mb-4">{currentContent.text}</p>
+                    
+                    {/* Video Player Placeholder */}
+                    <div className="relative bg-gray-900 rounded-lg overflow-hidden aspect-video mb-4">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="text-center">
+                          <div className="text-6xl mb-4">🎬</div>
+                          <p className="text-white text-lg mb-4">
+                            {selectedLanguage === 'pidgin' ? 'Video go load here' : 'Video will load here'}
+                          </p>
+                          <button className="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-full font-bold transition-all transform hover:scale-105">
+                            ▶️ {selectedLanguage === 'pidgin' ? 'Play Video' : 'Play Video'}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Video Info */}
+                    <div className="flex items-center justify-between text-sm text-gray-600">
+                      <span>🎭 {selectedLanguage === 'pidgin' ? 'Comedy Skit' : 'Comedy Skit'}</span>
+                      <span>⏱️ 2:30</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap gap-3 mt-6 justify-center">
+                <button
+                  onClick={generateContent}
+                  className="px-6 py-3 bg-gradient-to-r from-pink-400 to-purple-400 text-white rounded-full hover:shadow-lg transition-all transform hover:scale-105 font-medium"
+                >
+                  🔄 {selectedLanguage === 'pidgin' ? 'Generate Another' : 'Generate Another'}
+                </button>
+
+                <button
+                  onClick={() => {
+                    const favorites = JSON.parse(localStorage.getItem('moodlift-favorites') || '[]');
+                    favorites.push({ ...currentContent, timestamp: Date.now() });
+                    localStorage.setItem('moodlift-favorites', JSON.stringify(favorites));
+                    alert(selectedLanguage === 'pidgin' ? 'Added to favorites!' : 'Added to favorites!');
+                  }}
+                  className="px-6 py-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-white rounded-full hover:shadow-lg transition-all transform hover:scale-105 font-medium"
+                >
+                  ⭐ {selectedLanguage === 'pidgin' ? 'Save' : 'Save'}
+                </button>
+              </div>
+
+              {/* Social Media Share Buttons */}
+              <div className="mt-6 pt-6 border-t-2 border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-800 mb-3 text-center">
+                  {selectedLanguage === 'pidgin' ? 'Share for Social Media' : 'Share on Social Media'}
+                </h3>
+                <div className="flex flex-wrap gap-3 justify-center">
+                  {/* WhatsApp Share */}
+                  <button
+                    onClick={() => {
+                      const text = encodeURIComponent(currentContent.text + '\n\n✨ Shared from MoodLift App');
+                      window.open(`https://wa.me/?text=${text}`, '_blank');
+                    }}
+                    className="px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full hover:shadow-lg transition-all transform hover:scale-105 font-medium flex items-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                    WhatsApp
+                  </button>
+
+                  {/* Facebook Share */}
+                  <button
+                    onClick={() => {
+                      const url = encodeURIComponent(window.location.href);
+                      const quote = encodeURIComponent(currentContent.text);
+                      window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${quote}`, '_blank', 'width=600,height=400');
+                    }}
+                    className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full hover:shadow-lg transition-all transform hover:scale-105 font-medium flex items-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                    Facebook
+                  </button>
+
+                  {/* Twitter/X Share */}
+                  <button
+                    onClick={() => {
+                      const text = encodeURIComponent(currentContent.text + '\n\n✨ #MoodLift #MentalHealth');
+                      window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank', 'width=600,height=400');
+                    }}
+                    className="px-6 py-3 bg-black hover:bg-gray-800 text-white rounded-full hover:shadow-lg transition-all transform hover:scale-105 font-medium flex items-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                    X (Twitter)
+                  </button>
+
+                  {/* Copy Link */}
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(currentContent.text);
+                      alert(selectedLanguage === 'pidgin' ? 'Content don copy! You fit paste am anywhere!' : 'Content copied! You can paste it anywhere!');
+                    }}
+                    className="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white rounded-full hover:shadow-lg transition-all transform hover:scale-105 font-medium flex items-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    {selectedLanguage === 'pidgin' ? 'Copy' : 'Copy'}
+                  </button>
+
+                  {/* Instagram Note */}
+                  <div className="w-full mt-2 text-center">
+                    <p className="text-xs text-gray-500 italic">
+                      {selectedLanguage === 'pidgin' 
+                        ? '📸 For Instagram: Copy the content and paste am for your story or post!' 
+                        : '📸 For Instagram: Copy the content and paste it in your story or post!'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Rating Section */}
+              <div className="mt-8 pt-6 border-t-2 border-gray-200">
+                <h3 className="text-lg font-semibold text-gray-800 mb-3 text-center">
+                  {selectedLanguage === 'pidgin' ? 'How you see this content?' : 'Rate this content'}
+                </h3>
+                
+                {/* Star Rating */}
+                <div className="flex justify-center gap-2 mb-4">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      onClick={() => handleRating(star)}
+                      className="text-4xl transition-all transform hover:scale-110"
+                    >
+                      {star <= currentRating ? '⭐' : '☆'}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Rating Form */}
+                {showRatingForm && (
+                  <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 mt-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {selectedLanguage === 'pidgin' 
+                        ? 'Wetin you wan talk? (Optional)' 
+                        : 'Your feedback (Optional)'}
+                    </label>
+                    <textarea
+                      value={ratingComment}
+                      onChange={(e) => setRatingComment(e.target.value)}
+                      placeholder={selectedLanguage === 'pidgin' 
+                        ? 'Tell us wetin you think...' 
+                        : 'Tell us what you think...'}
+                      className="w-full px-4 py-3 rounded-lg border-2 border-purple-200 focus:border-purple-400 focus:outline-none resize-none"
+                      rows={3}
+                    />
+                    <div className="flex gap-3 mt-4">
+                      <button
+                        onClick={submitRating}
+                        className="flex-1 px-6 py-3 bg-gradient-to-r from-green-400 to-emerald-400 text-white rounded-lg font-medium hover:shadow-lg transition-all transform hover:scale-105"
+                      >
+                        ✅ {selectedLanguage === 'pidgin' ? 'Submit' : 'Submit'}
+                      </button>
+                      <button
+                        onClick={() => {
+                          setShowRatingForm(false);
+                          setCurrentRating(0);
+                          setRatingComment('');
+                        }}
+                        className="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg font-medium hover:bg-gray-300 transition-all"
+                      >
+                        ❌ {selectedLanguage === 'pidgin' ? 'Cancel' : 'Cancel'}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {currentRating > 0 && !showRatingForm && (
+                  <p className="text-center text-sm text-green-600 mt-2">
+                    {selectedLanguage === 'pidgin' 
+                      ? '✅ Thank you for your rating!' 
+                      : '✅ Thank you for your rating!'}
+                  </p>
+                )}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Video Clips Section */}
+        {selectedMood && (
+          <section className="mb-8">
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">
+              {selectedLanguage === 'pidgin' ? '🎬 Video Recommendations For You' : '🎬 Video Recommendations For You'}
+            </h2>
+            <p className="text-sm text-gray-600 mb-4">
+              {selectedLanguage === 'pidgin' 
+                ? 'Based on your mood, we recommend these videos:' 
+                : 'Based on your mood, we recommend these videos:'}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {getVideoRecommendations(selectedMood, selectedLanguage).map((video: VideoRecommendation) => (
+                <div
+                  key={video.id}
+                  className="bg-white rounded-xl shadow-md hover:shadow-2xl transition-all transform hover:scale-105 overflow-hidden"
+                >
+                  {/* Video Thumbnail */}
+                  <div className="relative bg-gradient-to-br from-purple-400 to-pink-400 aspect-video flex items-center justify-center">
+                    <div className="text-7xl">{video.emoji}</div>
+                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
+                      <button className="px-6 py-3 bg-white/90 rounded-full font-bold text-gray-800 transform hover:scale-110 transition-all">
+                        ▶️ Play
+                      </button>
+                    </div>
+                  </div>
+                  
+                  {/* Video Info */}
+                  <div className="p-5">
+                    <h3 className="font-bold text-lg text-gray-800 mb-2">{video.title}</h3>
+                    <p className="text-gray-600 text-sm mb-3">{video.description}</p>
+                    
+                    {/* Metadata */}
+                    <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
+                      <span className="flex items-center gap-1">
+                        🎭 {video.subtitle}
+                      </span>
+                      <span>⏱️ 2-5 min</span>
+                    </div>
+                    
+                    {/* Action Buttons */}
+                    <div className="flex gap-2">
+                      <button className="flex-1 py-2 bg-gradient-to-r from-yellow-400 to-pink-400 text-white rounded-lg font-medium hover:shadow-md transition-all">
+                        ▶️ {selectedLanguage === 'pidgin' ? 'Watch' : 'Watch'}
+                      </button>
+                      <button 
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (navigator.share) {
+                            navigator.share({
+                              title: video.title,
+                              text: video.description,
+                            }).catch(() => {});
+                          } else {
+                            alert(selectedLanguage === 'pidgin' ? 'Share link copied!' : 'Share link copied!');
+                          }
+                        }}
+                        className="px-4 py-2 bg-blue-100 text-blue-600 rounded-lg font-medium hover:bg-blue-200 transition-all"
+                      >
+                        📤
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {/* Daily Affirmation */}
+        <section className="mb-8">
+          <div className="bg-gradient-to-r from-purple-400 via-pink-400 to-yellow-400 rounded-2xl p-8 text-white text-center shadow-xl">
+            <h2 className="text-2xl font-bold mb-4">
+              ✨ {selectedLanguage === 'pidgin' ? 'Daily Affirmation' : 'Daily Affirmation'} ✨
+            </h2>
+            <p className="text-xl md:text-2xl font-light leading-relaxed">
+              {selectedLanguage === 'pidgin' 
+                ? 'You strong pass wetin you think, you brave pass wetin you believe, and people love you pass wetin you know. 💛'
+                : 'You are stronger than you think, braver than you believe, and more loved than you know. 💛'}
+            </p>
+          </div>
+        </section>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-white/80 backdrop-blur-sm py-6 mt-12">
+        <div className="max-w-6xl mx-auto px-4 text-center text-gray-600">
+          <p className="text-sm">
+            {selectedLanguage === 'pidgin' 
+              ? 'Made with 💛 to make your day better'
+              : 'Made with 💛 to brighten your day'}
+          </p>
+          <p className="text-xs mt-2">
+            {selectedLanguage === 'pidgin'
+              ? 'Remember: E dey okay to no dey okay. You dey do well! 🌟'
+              : "Remember: It's okay to not be okay. You're doing great! 🌟"}
+          </p>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
